@@ -1,0 +1,105 @@
+.search-form{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 70px 70px 48px 70px;
+    box-sizing: border-box;
+}
+.form-film{
+    margin: 0 0 34px 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #E8E8E8;
+}
+.form-film__input{
+    margin: 0 0 1px 0;
+    padding: 0 0 10px 0;
+    border: none;
+    width: calc(100% - 70px);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+}
+.form-film__input::placeholder{
+    font-size: 28px;
+    color: #A0A0A0; 
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.form-film__input:focus{
+    outline: none;
+    outline: 2px solid #3456F3;
+}
+.form-film__btn{
+    margin: 0 0 13px 0;
+    padding: 8px 13px;
+    max-width: 59px;
+    background-color: #3456F3;
+    border: none;
+    border-radius: 48px; 
+    color: #FFF;
+    text-align: center;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+    transition: opacity .8s;
+}
+.form-film__btn:hover{
+    cursor: pointer;
+    opacity: .8;
+}
+.short-films{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+}
+.short-films__title{
+    margin: 0;
+    padding: 0 0 0 14px;
+    color: #000;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 18px;
+}
+@media screen and (max-width: 800px) {
+    .search-form{
+        padding: 79px 30px 48px 30px;
+    }
+    .form-film{
+        margin-bottom: 29px;
+    }
+    .short-films{
+        flex-direction: row-reverse;
+    }
+    .short-films__title{
+        padding: 0 17px 0 0;
+    }
+}
+@media screen and (max-width: 590px) {
+    .form-film{
+        margin: 0 0 41px 0;
+    }
+    .search-form{
+        padding: 85px 14px 41px 14px;
+    }
+    .form-film__input{
+        font-size: 16px;
+    }
+    .form-film__input::placeholder{
+        font-size: 18px; 
+    }
+    .form-film__btn{
+        margin: 0 0 9px 0;
+    }
+    .short-films{
+        justify-content: center;
+    }
+    .short-films__title{
+        font-size: 11px; 
+    }  
+}
