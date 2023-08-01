@@ -1,0 +1,127 @@
+.mainpage-background{
+    background-color: #073042;
+}
+.mainpage{
+    max-width: 1280px;
+    margin: 0 auto;
+    background-color: #073042;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+.mainpage__container{
+    margin: 0;
+    padding: 75px 0 75px 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.mainpage__description{
+    margin: 0;
+    padding: 0;
+
+}
+.mainpage__title{
+    margin: 0;
+    padding: 0;
+    max-width: 635px;
+    color: #FFF;
+    font-size: 50px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 58px;
+}
+.mainpage__subtitle{
+    margin: 0;
+    padding: 37px 0 0 0;
+    width: 310px;
+    color: #FFF;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    opacity: .5;
+}
+.mainpage__btn{
+    margin: 0 0 0 1px;
+    padding: 10px 0 9px 0;
+    width: 126px;
+    background-color: transparent;
+    border-radius: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: #FFF;
+    text-align: center;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 16px;
+    transition: opacity .7s;
+}
+.mainpage__btn:hover{
+    cursor: pointer;
+    opacity: .8;
+}
+.mainpage__img{
+    width: 310px;
+    height: 304px;
+    padding: 75px 70px 195px 0;
+}
+@media screen and (max-width: 1100px) {
+    .mainpage{
+        padding-bottom: 76px;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+    .mainpage__img{
+        padding: 147px 0 49px 0;
+    }
+    .mainpage__container{
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+    }
+    .mainpage__description{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .mainpage__title{
+        padding: 0 10px;
+        text-align: center;
+        font-size: 40px;
+        line-height: 50px;
+    }
+    .mainpage__subtitle{
+        padding-top: 22px;
+        text-align: center;
+        max-width: 260px;
+    }
+    .mainpage__btn{
+        margin: 90px 0 0 0;
+    }   
+}
+@media screen and (max-width: 600px) {
+    .mainpage{
+        padding-bottom: 30px;
+    }
+    .mainpage__title{
+        font-size: 30px;
+        line-height: 38px;
+        letter-spacing: -1.2px;
+    }
+    .mainpage__btn{
+        margin-top: 80px;
+    }
+    
+}
+@media screen and (max-width: 500px) {
+    .mainpage__img{
+        padding: 72px 0 45px 0;
+        width: 210px;
+        height: 206px;
+    }
+    
+}
