@@ -4,10 +4,12 @@ import MoviesCard from '../MoviesCard/MoviesCard'
 function MoviesCardList ({movies, status}) {
     return (
         <>
-        <section className='movies-card-list'>
+        <ul className='movies-card-list'>
             {movies.map((movie)=>
-            <MoviesCard key={movie.movieId} item={movie} status={status}/>)}
-        </section>
+            <li className='movies-card-list__item'>
+                <MoviesCard key={movie.movieId} item={movie} status={status}/>
+            </li>)}
+        </ul>
         <button type='button' className='movies-card-list-btn'>Ещё</button>
         
         </>

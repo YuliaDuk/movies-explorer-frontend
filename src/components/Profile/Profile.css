@@ -106,8 +106,7 @@
 .profile__exit-btn{
     margin: 18px 0 0 0;
     padding: 0;
-    border: none;
-    background-color: transparent;
+    text-decoration: none;
     transition: opacity .7s;
     color: #FF3055;
     text-align: center;

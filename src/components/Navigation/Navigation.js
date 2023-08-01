@@ -7,7 +7,7 @@ function Navigation({status, clickLink}) {
     const location = useLocation();
     return(
         <section className={status ? 'navigation  navigation_active' : 'navigation'}>
-            <div className='navigation__menu'>
+            <nav className='navigation__menu'>
                 <ul className='navigation__items'>
                     <li className='navigation__item'>
                         <Link onClick={clickLink} to='/' className={`${location.pathname==='/' ? "navigation__link navigation__link_active" : "navigation__link"}`} >Главная</Link>
@@ -23,7 +23,7 @@ function Navigation({status, clickLink}) {
                     <p className="navigation__profile-btn-text">Аккаунт</p>
                     <img className="navigation__profile-btn-icon" alt="Профиль" src={profilelogo} />
                 </Link>
-            </div>
+            </nav>
         </section>
     )
 }

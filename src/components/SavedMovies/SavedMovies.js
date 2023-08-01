@@ -11,10 +11,10 @@ function SavedMovies() {
     }
     const cardStatus = savedmovie.length;
     return (
-        <section className='saved-movies'>
+        <div className='saved-movies'>
             <SearchForm />
            <MoviesCardList status={cardStatus} movies={savedmovie}/>
-        </section>
+        </div>
     )
 }
 export default SavedMovies;

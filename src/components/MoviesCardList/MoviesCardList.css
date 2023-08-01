@@ -8,6 +8,12 @@
     row-gap: 38px;
     justify-content: center;
     align-items: center;
+    list-style: none;
+}
+.movies-card-list__item{
+    margin: 0;
+    padding: 0;
+    width: 100%
 }
 .movies-card-list-btn{
     margin: 60px auto 90px auto;

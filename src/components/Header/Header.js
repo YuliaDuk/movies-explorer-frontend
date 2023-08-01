@@ -4,26 +4,28 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import profilelogo from "../../images/profile-icon.svg";
 import Navigation from "../Navigation/Navigation";
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
 function Header() {
   const [loggedIn, setLoggedIn] = useState(true);
   const location = useLocation();
   console.log(location.path === "/saved-movies");
   const headerBackgroundClass = `${
-    location.pathname === "/" ? "header-background-profile" : ""
+    location.pathname === "/" ? "header-background-profile_type_mainpage header-background-profile" : "header-background-profile"
   }`;
   const [burgerBtnClass, setBurgerBtnClass] = useState(false);
   const [statusBurger, setStatusBurger] = useState(false);
   function handleBurgerClick() {
     setBurgerBtnClass(!burgerBtnClass);
     setStatusBurger(!statusBurger);
+    statusBurger ? enablePageScroll() : disablePageScroll();
   }
   return (
     <div className={headerBackgroundClass}>
       <header className="header">
         <Link to="/" className="header__logo" />
         {!loggedIn ? (
-          <div className="header__btn-container">
+          <nav className="header__btn-container">
             <Link to="./signup" className="header__btn">
               Регистрация
             </Link>
@@ -31,11 +33,11 @@ function Header() {
               Войти
             </Link>
             
-          </div>
+          </nav>
         ) : (
           <>
             
-            <div className="header__films">
+            <nav className="header__films">
               <Link
                 to="./movies"
                 className={`${
@@ -64,7 +66,7 @@ function Header() {
               >
                 Сохраненные фильмы
               </Link>
-            </div>
+            </nav>
             <Link to="/profile" className="header__profile-btn-container">
               <p className="header__profile-btn-text">Аккаунт</p>
               <img

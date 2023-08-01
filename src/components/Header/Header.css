@@ -1,5 +1,7 @@
-
 .header-background-profile{
+    background-color: white;
+}
+.header-background-profile_type_mainpage{
     background-color: #073042;
 }
 .header{
@@ -20,6 +22,11 @@
     background: url(../../images/logo.svg) no-repeat center;
     display: block;
     object-fit: cover;
+    transition: opacity .7s;
+}
+.header__logo:hover{
+    cursor: pointer;
+    opacity: .7;
 }
 .header__btn-container{
     margin: 0;
@@ -90,6 +97,11 @@
     border-radius: 40px;
     background: #FFF;
     box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+    transition: opacity .7s;
+}
+.header__profile-btn-container:hover{
+    cursor: pointer;
+    opacity: .7;
 }
 .header__profile-btn-text{
     margin: 0;

@@ -44,6 +44,11 @@
     margin: 0;
     padding: 0;
     display: flex;
+    list-style: none;
+}
+.footer__item{
+    margin: 0;
+    padding: 0;
 }
 .footer__link{
     margin: 0 0 0 21px;

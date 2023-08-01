@@ -6,10 +6,10 @@ import {movies} from '../../utils/constants';
 
 function Movies () {
     return (
-        <section className='movies'>
+        <div className='movies'>
             <SearchForm />
             <MoviesCardList movies={movies}/>
-        </section>
+        </div>
     )
 }
 export default Movies;

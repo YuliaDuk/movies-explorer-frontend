@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function PageWithForm(props) {
   return (
-    <div className="page-with-form">
+    <section className="page-with-form">
       <div className="page-with-form__container">
         <Link to='/' className="page-with-form__icon" />
         <h1 className="page-with-form__title">{props.title}</h1>
@@ -28,7 +28,7 @@ function PageWithForm(props) {
           <Link to={`${props.link}`} className="page-with-form__footer-link">{props.textlink}</Link>
         </p>
       </div>
-    </div>
+    </section>
   );
 }
 

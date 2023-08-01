@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="page">
       {routeWithHeder.includes(location.pathname) ? <Header /> : ""}
-      <div className='main'>
+      <main className='main'>
       <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/movies" element ={<Movies />} />
@@ -30,7 +30,7 @@ function App() {
           <Route path="/signin" element={<Login />} />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
-      </div>
+      </main>
       {routeWithFooter.includes(location.pathname) ? <Footer /> : ""}
       <Navigation />
     </div>

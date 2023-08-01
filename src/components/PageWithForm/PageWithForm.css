@@ -18,6 +18,11 @@
     width: 38px;
     height: 38px;
     background: url(../../images/logo.svg) no-repeat center;
+    transition: opacity .7s;
+}
+.page-with-form__icon:hover{
+    cursor: pointer;
+    opacity: .7;
 }
 .page-with-form__title{
     margin: 0;

@@ -4,6 +4,11 @@
     display: inline-block;
     width: 35px;
     height: 14px;
+    transition: opacity .7s;
+}
+.switch:hover{
+    opacity: .8;
+    cursor: pointer;
 }
 .switch__checkbox {
     opacity: 0;
