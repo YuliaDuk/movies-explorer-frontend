@@ -1,19 +1,13 @@
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchForm from '../SearchForm/SearchForm';
-import { movies }from '../../utils/constants';
 
-function SavedMovies() {
-    const savedmovie=[];
-    for(let i=0; i<movies.length; i++){
-        if(movies[i].savedmovie){
-            savedmovie.push(movies[i])
-        }
-    }
-    const cardStatus = savedmovie.length;
+        
+function SavedMovies({handleCardSave, modifiedSavedMovies, handleSavedMovieCheckbocClick, searchFilmSubmit, emptyStatusSearchSavedFilm, errorSavedMovies}) {
+
     return (
         <div className='saved-movies'>
-            <SearchForm />
-           <MoviesCardList status={cardStatus} movies={savedmovie}/>
+            <SearchForm searchFilmSubmit={searchFilmSubmit} handleCheckbocClick={handleSavedMovieCheckbocClick}/>
+           <MoviesCardList emptyStatusSearchFilm={emptyStatusSearchSavedFilm} handleCardSave={handleCardSave} savedMovies={modifiedSavedMovies} errorSearchMovies={errorSavedMovies}/>
         </div>
     )
 }
