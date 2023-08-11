@@ -2,20 +2,20 @@ import ok from '../../images/ok.png';
 import cancel from '../../images/cancel.png'
 import { usePopupClose } from "../../hooks/usePopupClose";
 import './InfoTooltip.css';
-import { errorValidationMSG } from '../../utils/constants';
+import { ERRORVALIDATION_MSG, INFO_MSG } from '../../utils/constants';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 function InfoToolTip(props) {
   const location = useLocation();
-  const [error, setError] = useState(errorValidationMSG.registrationError)
+  const [error, setError] = useState(ERRORVALIDATION_MSG.REGISTRATION_ERROR)
 
   function setSpanError(){
-    if(location.pathname==='/signup' && props.registrationError==="Ошибка 409"){
-      setError(errorValidationMSG.duplicateEmail)
+    if(location.pathname==='/signup' && props.registrationError===ERRORVALIDATION_MSG.ERROR_409){
+      setError(ERRORVALIDATION_MSG.DUPLICATE_EMAIL)
     }
-    if(location.pathname==='/signin' && props.loginError==="Ошибка 401"){
-      setError(errorValidationMSG.incorrLoginPassword)
+    if(location.pathname==='/signin' && props.loginError===ERRORVALIDATION_MSG.ERROR_401){
+      setError(ERRORVALIDATION_MSG.INCORR_LOGIN_PASSWORD)
     }
 }
   useEffect(()=>{ 
@@ -41,12 +41,12 @@ function InfoToolTip(props) {
           src={props.status ? ok : cancel}
           className="popup__icon"
           alt={
-            props.status ? "Успешная регистрация" : "Не успешная регистрация"
+            props.status ? INFO_MSG.SUCSSESS : INFO_MSG.UNSUCSSESS
           }
         />
         <h3 className="popup__name popup__name_type_infotooltip">
           {props.status
-            ? `${location.pathname==='/profile'? "Данные профиля обновлены!":"Вы успешно зарегистрированы!"}`
+            ? `${location.pathname==='/profile'? INFO_MSG.PROFILE_SUCSSESS:INFO_MSG.REGISTRATION_SUCSSESS}`
             : error}
         </h3>
       </div>

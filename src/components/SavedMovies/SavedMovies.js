@@ -7,7 +7,7 @@ function SavedMovies({handleCardSave, modifiedSavedMovies, handleSavedMovieCheck
     return (
         <div className='saved-movies'>
             <SearchForm searchFilmSubmit={searchFilmSubmit} handleCheckbocClick={handleSavedMovieCheckbocClick}/>
-           <MoviesCardList emptyStatusSearchFilm={emptyStatusSearchSavedFilm} handleCardSave={handleCardSave} savedMovies={modifiedSavedMovies} errorSearchMovies={errorSavedMovies}/>
+           <MoviesCardList emptyStatusSearchFilm={emptyStatusSearchSavedFilm} handleCardSave={handleCardSave} modifiedSavedMovies={modifiedSavedMovies} errorSearchMovies={errorSavedMovies}/>
         </div>
     )
 }

@@ -11,15 +11,15 @@ class Api {
         })
         .then(this._getResponseData)
     }
-    getProfileInfo(){
-        const token = localStorage.getItem('token')
-        return fetch(`${this._baseUrl}/users/me`,{
-            headers: {
-                authorization: `Bearer ${token}`,
-            }
-        })
-        .then(this._getResponseData)
-    }
+    // getProfileInfo(){
+    //     const token = localStorage.getItem('token')
+    //     return fetch(`${this._baseUrl}/users/me`,{
+    //         headers: {
+    //             authorization: `Bearer ${token}`,
+    //         }
+    //     })
+    //     .then(this._getResponseData)
+    // }
     redProfile(name, email){
         const token = localStorage.getItem('token')
        return fetch(`${this._baseUrl}/users/me`,{

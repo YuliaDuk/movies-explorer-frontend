@@ -5,11 +5,11 @@ import { REGEXP_EMAIL, REGEXP_NAME } from "../../utils/constants";
 
 
 function Register(props) {
-  const { values, isValid, handleChange, errors, resetForm } = useValidation();
+  const { values, isValid, handleChange, errors } = useValidation();
   const handleSubmit = (e) => {
     e.preventDefault();
     props.handleRegistration(values.name, values.email, values.password);
-    resetForm()
+  
   };
 
   return (

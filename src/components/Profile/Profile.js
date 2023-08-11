@@ -4,10 +4,11 @@ import { useContext, useState, useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useValidation } from "../../hooks/useValidation";
 import { REGEXP_EMAIL, REGEXP_NAME } from "../../utils/constants";
-import { errorValidationMSG } from "../../utils/constants";
+import { ERRORVALIDATION_MSG
+ } from "../../utils/constants";
 
 function Profile(props) {
-  const { values, isValid, handleChange, resetForm, setValues } = useValidation();
+  const { values, isValid, handleChange, setValues } = useValidation();
   const currentUser = useContext(CurrentUserContext);
   const [statusFooterBtn, setStatusFooterBtn] = useState(true);
   const [textError, setTextError] = useState("");
@@ -23,14 +24,16 @@ function Profile(props) {
   function handleChangeSubmit(e) {
     e.preventDefault();
     props.handleProfileChangeSubmit(values.newname, values.newemail);
-    resetForm();
+
   }
 
   useEffect(() => {
     if (props.error === "Ошибка: 409") {
-      setTextError(errorValidationMSG.duplicateEmail);
+      setTextError(ERRORVALIDATION_MSG
+        .DUPLICATE_EMAIL);
     } else if (props.error) {
-      setTextError(errorValidationMSG.updateProfileError);
+      setTextError(ERRORVALIDATION_MSG
+        .UPDATE_PROFILE_ERROR);
     } else setTextError("");
   }, [props.error]);
 

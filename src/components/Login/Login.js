@@ -3,14 +3,13 @@ import {useValidation} from '../../hooks/useValidation';
 import { REGEXP_EMAIL } from "../../utils/constants";
 
 function Login(props) {
-  const {values, isValid, handleChange, errors, resetForm} = useValidation();
+  const {values, isValid, handleChange, errors} = useValidation();
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.email || !values.password) {
       return;
     }
     props.handleLogin(values.email, values.password);
-    resetForm();
   };
 
   return (

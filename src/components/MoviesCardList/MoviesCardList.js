@@ -1,16 +1,15 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useState, useEffect } from "react";
-import { errorValidationMSG } from "../../utils/constants";
+import { ERRORVALIDATION_MSG } from "../../utils/constants";
 import { useLocation} from "react-router-dom";
 
 function MoviesCardList({
   movies,
   emptyStatusSearchFilm,
-  savedMovieStatus,
   handleCardSave,
   cardSavedButtonClassName,
-  savedMovies,
+  modifiedSavedMovies,
   errorSearchMovies,
 }) {
   const [maxMovieNum, setMaxMovieNum] = useState(16);
@@ -22,7 +21,7 @@ function MoviesCardList({
 
   function setSpanError() {
     if (errorSearchMovies) {
-      setSpanText(errorValidationMSG.serverErrorSearch);
+      setSpanText(ERRORVALIDATION_MSG.SERVER_ERROR_SEARCH);
     }
     if (JSON.parse(localStorage.getItem("moviesFromBeat"))) {
       setSpanText("");
@@ -34,7 +33,7 @@ function MoviesCardList({
 
   function setEmptySearchError() {
     if (emptyStatusSearchFilm) {
-      setEmptyError(errorValidationMSG.nothingSearched);
+      setEmptyError(ERRORVALIDATION_MSG.NOTHING_SEARCHED);
     }
     if (!emptyStatusSearchFilm) {
       setEmptyError("");
@@ -44,6 +43,12 @@ function MoviesCardList({
   useEffect(() => {
     setEmptySearchError();
   }, [emptyStatusSearchFilm]);
+
+  useEffect(()=>{
+    if(location.pathname==='/saved-movies'){
+    setEmptyError("");
+    }
+  },[])
 
   useEffect(() => {
     if (location.pathname === "/saved-movies") {
@@ -78,16 +83,18 @@ function MoviesCardList({
     <>
       <span className="movies-card-list__error">{spanText || emptyError}</span>
       <ul className="movies-card-list">
-        {(movies || savedMovies).slice(0, maxMovieNum).map((movie) => (
-          <li className="movies-card-list__item" key={movie.movieId}>
-            <MoviesCard
-              item={movie}
-              savedMovieStatus={savedMovieStatus}
-              handleCardSave={handleCardSave}
-              cardSavedButtonClassName={cardSavedButtonClassName}
-            />
-          </li>
-        ))}
+        
+          {(movies || modifiedSavedMovies).slice(0, maxMovieNum).map((movie) => (
+            <li className="movies-card-list__item" key={movie.movieId}>
+              <MoviesCard
+                item={movie}
+                handleCardSave={handleCardSave}
+                cardSavedButtonClassName={cardSavedButtonClassName}
+              />
+            </li>
+          ))
+        }
+        
       </ul>
       {location.pathname === "/movies" ? (
         <button

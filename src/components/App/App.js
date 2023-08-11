@@ -33,42 +33,34 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorUpdateProfile, seterrorUpdateProfile] = useState("");
   const [errorSearchMovies, setErrorSearchMovies] = useState(false);
-  const [errorSavedMovies, setErrorSavedMovies] = useState('');
+  const [errorSavedMovies, setErrorSavedMovies] = useState("");
   const [statusPreloader, setStatusPreloader] = useState(false);
   const [emptyStatusSearchFilm, setEmptyStatusSearchFilm] = useState(false);
   const [searchFilms, setSearchFilms] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
   const [modifiedMovies, setModifiedMovies] = useState([]);
   const [modifiedSavedMovies, setModifiedSavedMovies] = useState([]);
-  const [emptyStatusSearchSavedFilm, setEmptyStatusSearchSavedFilm] = useState(false);
-  const [registrationError, setRegistrationError] =useState('')
-  const [loginError, setLoginError] = useState('')
-
+  const [emptyStatusSearchSavedFilm, setEmptyStatusSearchSavedFilm] =
+    useState(false);
+  const [registrationError, setRegistrationError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   useEffect(() => {
+    tokenCheck();
     setEmptyStatusSearchFilm(false);
-    setErrorSearchMovies(false)
+    setErrorSearchMovies(false);
     if (loggedIn) {
-      mainApi
-        .getProfileInfo()
-        .then((res) => {
-          setCurrentUser(res);
-        })
-        .catch((err) => console.log(err));
-        renderSavedMovies();
+      renderSavedMovies();
     }
-    if(!loggedIn){
-      setModifiedMovies([])
-      setSearchFilms([])
+    if (!loggedIn) {
+      setModifiedMovies([]);
+      setSearchFilms([]);
     }
   }, [loggedIn]);
 
   useEffect(() => {
-    tokenCheck();
     setPreviousSearch();
   }, []);
 
-  
   //РЕГИСТРАЦИЯ
   function handleRegistration(name, email, password) {
     auth
@@ -81,7 +73,7 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
-        setRegistrationError(err)
+        setRegistrationError(err);
         setStatusInfoTooltip(false);
       })
       .finally(() => {
@@ -91,25 +83,22 @@ function App() {
 
   //ЛОГИН
   function handleLogin(email, password) {
-    setLoginError('')
+    setLoginError("");
     auth
       .authorize(email, password)
       .then((data) => {
-
         if (data.token) {
           tokenCheck();
           setLoggedIn(true);
           navigate("/movies", { replace: true });
         }
       })
-      
       .catch((err) => {
         setStatusInfoTooltip(false);
-        setLoginError(err)
-        console.log(err)
+        setLoginError(err);
+        console.log(err);
         setInfoTooltipPopupOpen(true);
-      })
-
+      });
   }
 
   //ПРОВЕРКА ТОКЕНА
@@ -120,8 +109,9 @@ function App() {
         .getContent(token)
         .then((res) => {
           if (res) {
+            setCurrentUser(res);
             setLoggedIn(true);
-            navigate("/movies", { replace: true });
+            navigate(location.pathname, { replace: true });
           }
         })
         .catch((err) => console.log(err));
@@ -158,8 +148,6 @@ function App() {
     localStorage.clear();
     setLoggedIn(false);
     navigate("/", { replace: true });
-
-    
   }
 
   //КОНВЕРТАЦИЯ В НАШУ БД
@@ -181,40 +169,43 @@ function App() {
 
   //ПОЛУЧЕНИЕ СОХРАНЕННЫХ ФИЛЬМОВ ИЗ БД
   function renderSavedMovies() {
-    mainApi.getSavedMovies().then((res) => {
-      setSavedMovies(res.data);
-      setModifiedSavedMovies(res.data);
-    });
+    mainApi
+      .getSavedMovies()
+      .then((res) => {
+        localStorage.setItem("savedMovies", JSON.stringify(res.data));
+        setModifiedSavedMovies(res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   //ПОЛУЧЕНИЕ ФИЛЬМОВ С СЕРВЕРА
   function firstMovieSearch(str) {
     setStatusPreloader(true);
     const moviesFromBeatFilm = [];
-    movieApi.getMovies()
-    .then((res) => {
-      setErrorSearchMovies(false)
-      res.forEach((film) => {
-        const convertedMovie = convertToBD(film);
-        moviesFromBeatFilm.push(convertedMovie);
+    movieApi
+      .getMovies()
+      .then((res) => {
+        setErrorSearchMovies(false);
+        res.forEach((film) => {
+          const convertedMovie = convertToBD(film);
+          moviesFromBeatFilm.push(convertedMovie);
+        });
+        localStorage.setItem(
+          "moviesFromBeat",
+          JSON.stringify(moviesFromBeatFilm)
+        );
+      })
+      .then(() => {
+        searchFilmSubmit(str);
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorSearchMovies(true);
+      })
+      .finally(() => {
+        setStatusPreloader(false);
       });
-      localStorage.setItem(
-        "moviesFromBeat",
-        JSON.stringify(moviesFromBeatFilm)
-      );
-    })
-    .then(()=>{
-      searchFilmSubmit(str)
-    })
-    .catch((err)=>{
-      console.log(err)
-      setErrorSearchMovies(true)
-    })
-    .finally(() => {
-      setStatusPreloader(false);
-    });
   }
-
 
   //ПОИСК ФИЛЬМОВ ПО СТРОКЕ
   function searchFilmSubmit(str) {
@@ -228,7 +219,9 @@ function App() {
       .then((moviesFromDB) => {
         moviesFromBeat.forEach((film) => {
           if (moviesFromDB.data.find((item) => item.movieId === film.movieId)) {
-            film.owner = moviesFromDB.data.find((item) => item.movieId === film.movieId).owner;
+            film.owner = moviesFromDB.data.find(
+              (item) => item.movieId === film.movieId
+            ).owner;
           }
           if (searchWithString(film, str)) {
             newsearchmovies.push(searchWithString(film, str));
@@ -257,30 +250,17 @@ function App() {
   //ПОИСК СОХРАНЕНЫХ ФИЛЬМОВ ПО СТРОКЕ
   function searchSavedFilmSubmit(str) {
     setEmptyStatusSearchSavedFilm(false);
-    setStatusPreloader(true);
     const newsearchmovies = [];
-    mainApi
-      .getSavedMovies()
-      .then((res) => {
-        res.data.forEach((film) => {
-          if (searchWithString(film, str)) {
-            newsearchmovies.push(searchWithString(film, str));
-          }
-        });
-      })
-      .then(() => {
-        setModifiedSavedMovies(newsearchmovies);
-        if (newsearchmovies.length === 0) {
-          setEmptyStatusSearchSavedFilm(true);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        setErrorSavedMovies(err)
-      })
-      .finally(() => {
-        setStatusPreloader(false);
-      });
+    const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+    savedMovies.forEach((film) => {
+      if (searchWithString(film, str)) {
+        newsearchmovies.push(searchWithString(film, str));
+      }
+    });
+    setModifiedSavedMovies(newsearchmovies);
+    if (newsearchmovies.length === 0) {
+      setEmptyStatusSearchSavedFilm(true);
+    }
   }
 
   //ПРЕДЫДУЩИЙ ПОИСК
@@ -295,63 +275,65 @@ function App() {
       if (localStorage.getItem("checkbox") === "true") {
         handleCheckbocClick(true);
       }
-      
     }
-
   }
-
   //УДАЛЕНИЕ И СОХРАНЕНИЕ ФИЛЬМОВ
   function handleCardSave(movie) {
     const isSaved = movie.owner === currentUser.data._id;
+    const searchedArray = JSON.parse(localStorage.getItem("searchedArray"));
     if (!isSaved) {
       mainApi
         .addNewMovie(movie)
-        .then((newMovie) => {
+        .then((resMovie) => {
+          const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+          savedMovies.push(resMovie.data);
+          localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
+
           setSearchFilms((state) =>
             state.map((c) =>
-              c.movieId === newMovie.data.movieId ? newMovie.data : c
+              c.movieId === resMovie.data.movieId ? resMovie.data : c
             )
           );
           setModifiedMovies((state) =>
             state.map((c) =>
-              c.movieId === newMovie.data.movieId ? newMovie.data : c
+              c.movieId === resMovie.data.movieId ? resMovie.data : c
             )
           );
+          searchedArray.forEach((film) => {
+            if (film.movieId === resMovie.data.movieId) {
+              film.owner = resMovie.data.owner;
+            }
+          });
         })
         .then(() => {
-          renderSavedMovies();
+          localStorage.setItem("searchedArray", JSON.stringify(searchedArray));
         })
         .catch((err) => console.log(err));
     }
     if (isSaved) {
+      const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+      movie._id = savedMovies.find(
+        (item) => item.movieId === movie.movieId
+      )._id;
       mainApi
-        .getSavedMovies()
-        .then((res) => {
-          movie._id = res.data.find(
-            (item) => item.movieId === movie.movieId
-          )._id;
+        .deleteMovie(movie._id)
+        .then(() => {
+          const savedMovies = JSON.parse(localStorage.getItem("savedMovies"));
+          localStorage.setItem(
+            "savedMovies",
+            JSON.stringify(savedMovies.filter((c) => c._id !== movie._id))
+          );
+          searchedArray.forEach((film) => {
+            if (film.movieId === movie.movieId) {
+              film.owner = "";
+            }
+          });
+          setSearchFilms(searchedArray);
+          setModifiedMovies(searchedArray);
         })
         .then(() => {
-          mainApi
-            .deleteMovie(movie._id)
-            .then((newMovie) => {
-              newMovie.data.owner = "";
-              setSearchFilms((state) =>
-                state.map((c) =>
-                  c.movieId === newMovie.data.movieId ? newMovie.data : c
-                )
-              );
-              setModifiedMovies((state) =>
-                state.map((c) =>
-                  c.movieId === newMovie.data.movieId ? newMovie.data : c
-                )
-              );
-            })
-            .then(() => {
-              renderSavedMovies();
-            });
-        })
-        .catch((err) => console.log(err));
+          localStorage.setItem("searchedArray", JSON.stringify(searchedArray));
+        });
     }
   }
 
@@ -368,9 +350,11 @@ function App() {
   //ЧЕКБОКС КОРОТКОМЕТРАЖЕК В СОХРАНЕННЫХ ФИЛЬМАХ
   function handleSavedMovieCheckbocClick(stateCheckbox) {
     if (stateCheckbox) {
-      setModifiedSavedMovies(modifiedSavedMovies.filter((c) => c.duration < 40));
+      setModifiedSavedMovies(
+        modifiedSavedMovies.filter((c) => c.duration < 40)
+      );
     } else {
-      setModifiedSavedMovies(savedMovies);
+      setModifiedSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
     }
   }
 
