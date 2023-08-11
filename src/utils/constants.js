@@ -1,124 +1,33 @@
-import first from '../images/movies/1.png';
-import second from '../images/movies/2.png';
-import third from '../images/movies/3.png';
-import fourth from '../images/movies/4.png';
-import fifth from '../images/movies/5.png';
-import sixth from '../images/movies/6.png';
-import seventh from '../images/movies/7.png';
-import eighth from '../images/movies/8.png';
-import ninth from '../images/movies/9.png';
-import tenth from '../images/movies/10.png';
-
-const movies = [{
-    duration: '1ч 42м',
-    image: first,
-    nameRU: "33 слова о дизайне",
-    movieId: 1,
-    savedmovie: true,
-    },
+const ERRORVALIDATION_MSG = 
     {
-    duration: '1ч 42м',
-    image: second,
-    nameRU: "Киноальманах «100 лет дизайна»",
-    movieId: 2,
-    savedmovie: true,
-    },
-    {
-    duration: '1ч 42м',
-    image: third,
-    nameRU: "Когда я думаю о Германии ночью»",
-    movieId: 3,
-    savedmovie: true,
-    },
-    {
-    duration: '1ч 42м',
-    image: fourth,
-    nameRU: "Бег это свобода",
-    movieId: 4,
-    },
-    {
-    duration: '1ч 42м',
-    image: fifth,
-    nameRU: "Зона",
-    movieId: 5,
-    },
-    {
-    duration: '1ч 42м',
-    image: sixth,
-    nameRU: "Соберись перед прыжком",
-    movieId: 6,
-    },
-    {
-    duration: '1ч 42м',
-    image: seventh,
-    nameRU: "Пи Джей Харви: A dog called money",
-    movieId: 7,
-    },
-        {
-    duration: '1ч 42м',
-    image: eighth,
-    nameRU: "Дженис: Маленькая девочка грустит",
-    movieId: 8,
-    },
-        {
-    duration: '1ч 42м',
-    image: ninth,
-    nameRU: "Пи Джей Харви: A dog called money",
-    movieId: 9,
-    },
-        {
-    duration: '1ч 42м',
-    image: tenth,
-    nameRU: "В погоне за Бенкси",
-    movieId: 10,
-    },
-        {
-    duration: '1ч 42м',
-    image: first,
-    nameRU: "По волнам: Искусство звука в кино",
-    movieId: 11,
-    },
-        {
-    duration: '1ч 42м',
-    image: second,
-    nameRU: "Когда я думаю о Германии ночью",
-    movieId: 12,
-    },
-    {
-    duration: '1ч 42м',
-    image: ninth,
-    nameRU: "Пи Джей Харви: A dog called money",
-    movieId: 13,
-    },
-        {
-    duration: '1ч 42м',
-    image: tenth,
-    nameRU: "В погоне за Бенкси",
-    movieId: 14,
-    },
-        {
-    duration: '1ч 42м',
-    image: first,
-    nameRU: "По волнам: Искусство звука в кино",
-    movieId: 15,
-    },
-        {
-    duration: '1ч 42м',
-    image: second,
-    nameRU: "Когда я думаю о Германии ночью",
-    movieId: 16,
-    },
-]
-const errorValidationMSG = [
-    {
-        incorrLoginPassword: "Вы ввели неправильный логин или пароль.",
-        invalidToken: "При авторизации произошла ошибка. Токен не передан или передан не в том формате.",
-        incorrToken: "При авторизации произошла ошибка. Переданный токен некорректен.",
-        duplicateEmail: "Пользователь с таким email уже существует.",
-        registrationError: "При регистрации пользователя произошла ошибка.",
-        updateProfileError: "При обновлении профиля произошла ошибка.",
-        serverError: "500 На сервере произошла ошибка.",
-        notFoundError: "404 Страница по указанному маршруту не найдена."
+        INCORR_LOGIN_PASSWORD: "Вы ввели неправильный логин или пароль.",
+        INVALID_TOKEN: "При авторизации произошла ошибка. Токен не передан или передан не в том формате.",
+        INCORR_TOKEN: "При авторизации произошла ошибка. Переданный токен некорректен.",
+        DUPLICATE_EMAIL: "Пользователь с таким email уже существует.",
+        REGISTRATION_ERROR: "При регистрации пользователя произошла ошибка.",
+        UPDATE_PROFILE_ERROR: "При обновлении профиля произошла ошибка.",
+        SERVER_ERROR: "500 На сервере произошла ошибка.",
+        NOT_FOUND_ERROR: "404 Страница по указанному маршруту не найдена.",
+        SEARCH_FORM_ERROR: 'Нужно ввести ключевое слово',
+        NOTHING_SEARCHED: "Ничего не найдено",
+        SERVER_ERROR_SEARCH: "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз",
+        ERROR_401: "Ошибка 401",
+        ERROR_409: "Ошибка 409"
     }
-]
-    export  { movies, errorValidationMSG};
+
+const  INFO_MSG =
+    {
+        SUCSSESS: 'Все прошло успешно',
+        UNSUCSSESS: 'Что-то пошло не так',
+        PROFILE_SUCSSESS: "Данные профиля обновлены!",
+        REGISTRATION_SUCSSESS: "Вы успешно зарегистрированы!"
+
+    }
+
+const REGEXP_EMAIL = "^([^ ]+@[^ ]+\\.[a-z]{2,6}|)$";
+// eslint-disable-next-line no-useless-escape
+const REGEXP_NAME = '^[A-Za-zА-Яа-яЁё\\-\\s]+$';
+
+
+
+export  { ERRORVALIDATION_MSG, INFO_MSG, REGEXP_EMAIL, REGEXP_NAME };

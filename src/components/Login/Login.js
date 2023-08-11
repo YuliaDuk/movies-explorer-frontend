@@ -1,8 +1,17 @@
 import PageWithForm from "../PageWithForm/PageWithForm";
 import {useValidation} from '../../hooks/useValidation';
+import { REGEXP_EMAIL } from "../../utils/constants";
 
-function Login() {
-  const {values, isValid, handleChange, errors, resetForm} = useValidation()
+function Login(props) {
+  const {values, isValid, handleChange, errors} = useValidation();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!values.email || !values.password) {
+      return;
+    }
+    props.handleLogin(values.email, values.password);
+  };
+
   return (
     <PageWithForm
       title="Рады видеть!"
@@ -11,7 +20,8 @@ function Login() {
       isregister="Ещё не зарегистрированы? "
       link = '/signup'
       formname='logForm'
-      validityState ={isValid}
+      validityState={isValid}
+      onSubmit={handleSubmit}
     >
       <label htmlFor="email-input" className="form__label">
         E-mail
@@ -21,8 +31,12 @@ function Login() {
         type="email"
         id="email-input"
         name="email"
+        value={values.email || ""}
         onChange={handleChange}
+        placeholder="Введите электронную почту"
+        pattern={REGEXP_EMAIL}
         required
+        autoComplete="off"
       />
       <span className="form__input-error email-input-error">{errors.email}</span>
       <label htmlFor="email-input" className="form__label">
@@ -34,7 +48,10 @@ function Login() {
         id="password-input"
         name="password"
         autoComplete="new-password"
+        value={values.password || ""}
         onChange={handleChange}
+        placeholder="Введите пароль"
+        minLength={8}
         required
       />
       <span className="form__input-error password-input-error">{errors.password}</span>

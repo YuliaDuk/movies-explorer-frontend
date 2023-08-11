@@ -65,6 +65,16 @@
     outline: none;
     border-bottom: 1px solid #3456F3;
 }
+
+.form__input::placeholder{
+    margin: 0;
+    padding: 0;
+    color: #A0A0A0;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
 .form__input-error{
     margin: 0;
     padding: 0;
@@ -95,13 +105,19 @@
     padding: 14px 0 15px 0;
     border: none;
     border-radius: 3px;
-    background: #3456F3;
+    background-color: #3456F3;
     transition: opacity .7s;
     color: white;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
     line-height: normal; 
+}
+.page-with-form__footer-btn_disabled{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.page-with-form__footer-btn_disabled:hover{
+    pointer-events: none;
 }
 .page-with-form__footer-btn:hover{
     cursor: pointer;

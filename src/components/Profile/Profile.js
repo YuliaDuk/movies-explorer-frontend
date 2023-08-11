@@ -1,24 +1,79 @@
 import "./Profile.css";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+import { useContext, useState, useEffect } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useValidation } from "../../hooks/useValidation";
+import { REGEXP_EMAIL, REGEXP_NAME } from "../../utils/constants";
+import { ERRORVALIDATION_MSG
+ } from "../../utils/constants";
 
-function Profile() {
+function Profile(props) {
+  const { values, isValid, handleChange, setValues } = useValidation();
+  const currentUser = useContext(CurrentUserContext);
+  const [statusFooterBtn, setStatusFooterBtn] = useState(true);
+  const [textError, setTextError] = useState("");
+
+  function delSpanError() {
+    setTextError("");
+  }
+
+  function handleRedBtnClick() {
+    setStatusFooterBtn(!statusFooterBtn);
+  }
+
+  function handleChangeSubmit(e) {
+    e.preventDefault();
+    props.handleProfileChangeSubmit(values.newname, values.newemail);
+
+  }
+
+  useEffect(() => {
+    if (props.error === "Ошибка: 409") {
+      setTextError(ERRORVALIDATION_MSG
+        .DUPLICATE_EMAIL);
+    } else if (props.error) {
+      setTextError(ERRORVALIDATION_MSG
+        .UPDATE_PROFILE_ERROR);
+    } else setTextError("");
+  }, [props.error]);
+
+  useEffect(() => {
+    setTextError("");
+  }, []);
+
+  useEffect(() => {
+    setValues({
+      newname: currentUser.data.name,
+      newemail: currentUser.data.email,
+    });
+  }, [setValues, currentUser]);
+  
   return (
     <section className="profile">
       <div className="profile__container">
-        <h1 className="profile__title">Привет, Виталий!</h1>
-        <form className="profile-form">
+        <h1 className="profile__title">Привет, {currentUser.data.name}!</h1>
+        <form
+          onSubmit={handleChangeSubmit}
+          className="profile-form"
+          id="profile-form"
+        >
           <div className="profile-form__container">
             <label htmlFor="name-input" className="profile-form__label">
               Имя
             </label>
             <input
               type="text"
-              name="name"
-              id="name-input"
+              name="newname"
+              id="newname-input"
               className="profile-form__input"
               placeholder="Имя"
-              value='Виталий'
-              disabled
+              value={values.newname || ""}
+              disabled={statusFooterBtn}
+              onChange={handleChange}
+              minLength={2}
+              maxLength={30}
+              pattern={REGEXP_NAME}
+              onFocus={delSpanError}
             />
           </div>
           <div className="profile-form__container">
@@ -26,29 +81,59 @@ function Profile() {
               E-mail
             </label>
             <input
+              onFocus={delSpanError}
               type="email"
-              name="email"
-              id="email-input"
+              name="newemail"
+              id="newemail-input"
               className="profile-form__input"
-              placeholder="E-mail"
-              value='pochta@yandex.ru'
-              disabled
+              placeholder="Электронная почта"
+              value={values.newemail || ""}
+              disabled={statusFooterBtn}
+              onChange={handleChange}
+              pattern={REGEXP_EMAIL}
             />
           </div>
         </form>
       </div>
-      <div className="profile__footer">
-        <span className="profile__err-text">
-          При обновлении профиля произошла ошибка.
-        </span>
-        <button className="profile__red-btn" type="button" aria-label="Редактировать">
+      <div
+        className={`${
+          statusFooterBtn
+            ? "profile__footer"
+            : "profile__footer profile__footer_inactive"
+        }`}
+      >
+        <button
+          onClick={handleRedBtnClick}
+          className="profile__red-btn"
+          type="button"
+          aria-label="Редактировать"
+        >
           Редактировать
         </button>
-        <Link to='/' className="profile__exit-btn">
+        <Link onClick={props.signOut} to="/" className="profile__exit-btn">
           Выйти из аккаунта
         </Link>
-        <button className="profile__save-btn" type="button" aria-label="Сохранить">
-          Сохранить
+      </div>
+      <div
+        className={`${
+          statusFooterBtn
+            ? "profile__footer  profile__footer_inactive"
+            : "profile__footer"
+        }`}
+      >
+        <span className="profile__err-text">{textError}</span>
+        <button
+          form="profile-form"
+          className={
+            !isValid || (values.newname===currentUser.data.name && values.newemail===currentUser.data.email)
+              ? "profile__save-btn profile__save-btn_disabled"
+              : "profile__save-btn"
+          }
+          type="submit"
+          aria-label="Сохранить"
+          disabled={!isValid || (values.newname===currentUser.data.name && values.newemail===currentUser.data.email)}
+        >
+          {props.buttonText}
         </button>
       </div>
     </section>
