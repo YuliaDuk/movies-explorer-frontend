@@ -189,7 +189,7 @@ function App() {
 
   //ПОЛУЧЕНИЕ ФИЛЬМОВ С СЕРВЕРА
   function firstMovieSearch(str) {
-    
+    setStatusPreloader(true);
     const moviesFromBeatFilm = [];
     movieApi.getMovies()
     .then((res) => {
@@ -209,6 +209,9 @@ function App() {
     .catch((err)=>{
       console.log(err)
       setErrorSearchMovies(true)
+    })
+    .finally(() => {
+      setStatusPreloader(false);
     });
   }
 
